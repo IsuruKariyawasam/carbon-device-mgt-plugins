@@ -17,16 +17,26 @@
 }}
 {{unit "cdmf.unit.lib.rickshaw-graph"}}
 
-<div id="div-chart" data-websocketurl="{{websocketEndpoint}}">
-    <div class="chartWrapper" id="chartWrapper">
-        <div id="y_axis" class="custom_y_axis" style="margin-top: -20px;">Temperature</div>
+{{#zone "topCss"}}
+    {{css "css/custom.css"}}
+{{/zone}}
+
+<div id="div-chart2" style="margin-top: -20px;" data-websocketurl="{{websocketEndpoint}}">
+    <div class="chartWrapper" id="anomchartWrapper">
+        <div id="y_axis2" class="custom_y_axis" style="margin-top: -20px;">Temperature</div>
         <div class="legend_container">
             <div id="smoother" title="Smoothing"></div>
             <div id="legend"></div>
         </div>
-        <div id="chart" class="custom_rickshaw_graph"></div>
+        <div id="chart2" class="custom_rickshaw_graph"></div>
         <div class="custom_x_axis">Time</div>
     </div>
+
+    <div class="scrollbox">
+        <p id="demo"></p>
+    </div>
+
+
 </div>
 <a class="padding-left"
    href="{{@app.context}}/device/{{device.type}}/analytics?deviceId={{device.deviceIdentifier}}&deviceName={{device.name}}">

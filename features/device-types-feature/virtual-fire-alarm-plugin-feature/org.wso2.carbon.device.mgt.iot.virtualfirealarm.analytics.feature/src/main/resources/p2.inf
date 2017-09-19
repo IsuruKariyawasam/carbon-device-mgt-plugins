@@ -6,3 +6,4 @@ org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../featur
 
 instructions.unconfigure = \
 org.eclipse.equinox.p2.touchpoint.natives.remove(path:${installFolder}/../../../repository/deployment/server/carbonapps/virtualfirealarm.car);\
+org.eclipse.equinox.p2.touchpoint.natives.remove(path:${installFolder}/../../../repository/deployment/server/carbonapps/anomaly_detection.car);\

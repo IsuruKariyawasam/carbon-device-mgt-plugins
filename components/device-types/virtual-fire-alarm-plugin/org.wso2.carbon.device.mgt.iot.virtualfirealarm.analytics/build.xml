@@ -24,6 +24,7 @@
     <property name="src-dir" value="src/main/resources/carbonapps"/>
 
     <property name="Virtual_firealarm_dir" value="virtualfirealarm"/>
+    <property name="Anomaly-detection_dir" value="anomaly_detection"/>
 
     <target name="clean">
         <delete dir="${target-dir}" />
@@ -33,6 +34,9 @@
         <mkdir dir="${target-dir}"/>
         <zip destfile="${target-dir}/${Virtual_firealarm_dir}.car">
             <zipfileset dir="${src-dir}/${Virtual_firealarm_dir}"/>
+        </zip>
+       <zip destfile="${target-dir}/${Anomaly-detection_dir}.car">
+            <zipfileset dir="${src-dir}/${Anomaly-detection_dir}"/>
         </zip>
     </target>
 </project>

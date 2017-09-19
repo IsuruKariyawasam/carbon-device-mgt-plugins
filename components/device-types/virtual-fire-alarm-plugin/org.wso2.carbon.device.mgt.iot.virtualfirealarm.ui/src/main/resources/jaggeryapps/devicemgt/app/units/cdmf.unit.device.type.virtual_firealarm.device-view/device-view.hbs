@@ -62,15 +62,35 @@
                           data-toggle="tab" aria-controls="device_statistics">Device
                                                                               Statistics</a>
     </li>
+
+    <li> <a class="list-group-item" href="#anom_log" role="tab"
+                          data-toggle="tab" aria-controls="anom_log">Anomaly Log</a>
+    </li>
+
 {{/zone}}
+
 
 {{#zone "device-view-tab-contents"}}
 
+
     <div class="panel panel-default tab-pane active"
          id="device_statistics" role="tabpanel" aria-labelledby="device_statistics">
+
         <div class="panel-heading">Device Statistics</div>
         {{unit "cdmf.unit.device.type.virtual_firealarm.realtime.analytics-view" device=device}}
+
     </div>
+
+
+    <div class="panel panel-default tab-pane active"
+         id="anom_log" role="tabpanel" aria-labelledby="anom_log">
+
+        <div class="panel-heading">Device Anomaly Log View</div>
+        {{unit "cdmf.units.analytics.anomaly.detection.analytics-chart-view" device=device}}
+
+    </div>
+  
+
 
     <div class="panel panel-default tab-pane" id="policies" role="tabpanel"
          aria-labelledby="policies">
@@ -99,6 +119,11 @@
                                             <i class="fw fw-policy fw-stack-1x"></i>
                                         </span> Add device specific policy</a>
     </div>
+
+
+
+
+
     <div class="panel panel-default tab-pane" id="event_log" role="tabpanel"
          aria-labelledby="event_log">
         <div class="panel-heading">Operations Log <span><a href="#"
@@ -123,4 +148,8 @@
         </div>
     </div>
 {{/zone}}
+
+
+
+
 

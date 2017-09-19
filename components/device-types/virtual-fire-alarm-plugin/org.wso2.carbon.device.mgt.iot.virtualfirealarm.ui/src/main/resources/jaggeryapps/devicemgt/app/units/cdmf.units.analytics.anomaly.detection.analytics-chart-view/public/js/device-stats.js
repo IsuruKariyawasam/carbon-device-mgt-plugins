@@ -16,13 +16,17 @@
  * under the License.
  */
 
-var virtualFireAlarmTemp = function(){
+var anomalyDetection = function(){
     var ws;
     var graph;
     var chartData = [];
+    var alertInfo = new Array();
+
+    var alertMsg;
 
     $(window).load(function () {
         var tNow = new Date().getTime() / 1000;
+        console.log("tNow = "+tNow);
         for (var i = 0; i < 30; i++) {
             chartData.push({
                 x: tNow - (30 - i) * 15,
@@ -31,15 +35,15 @@ var virtualFireAlarmTemp = function(){
         }
 
         graph = new Rickshaw.Graph({
-            element: document.getElementById("chart"),
-            width: $("#div-chart").width() - 50,
+            element: document.getElementById("chart2"),
+            width: $("#div-chart2").width() - 50,
             height: 300,
             renderer: "line",
             interpolation: "linear",
             padding: {top: 0.2, left: 0.0, right: 0.0, bottom: 0.2},
             xScale: d3.time.scale(),
             series: [{
-                'color': "blue",
+                'color': "red",
                 'data': chartData,
                 'name': "Temperature"
             }]
@@ -58,7 +62,7 @@ var virtualFireAlarmTemp = function(){
             orientation: 'left',
             height: 300,
             tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-            element: document.getElementById('y_axis')
+            element: document.getElementById('y_axis2')
         });
 
         new Rickshaw.Graph.HoverDetail({
@@ -70,7 +74,7 @@ var virtualFireAlarmTemp = function(){
             }
         });
 
-        var websocketUrl = $("#div-chart").data("websocketurl");
+        var websocketUrl = $("#div-chart2").data("websocketurl");
         connect(websocketUrl)
     });
 
@@ -82,8 +86,7 @@ var virtualFireAlarmTemp = function(){
 
     //websocket connection
     function connect(target) {
-        console.log("-----1-----");
-
+        console.log("-----Anomaly-Log-----");
         if ('WebSocket' in window) {
             ws = new WebSocket(target);
         } else if ('MozWebSocket' in window) {
@@ -94,13 +97,30 @@ var virtualFireAlarmTemp = function(){
         if (ws) {
             ws.onmessage = function (event) {
                 var dataPoint = JSON.parse(event.data);
+
                 chartData.push({
                     x: parseInt(dataPoint[4]) / 1000,
                     y: parseFloat(dataPoint[5])
                 });
                 chartData.shift();
                 graph.update();
-                console.log("Tempreture "+dataPoint[5]+" TS: "+( (dataPoint[4]) / 1000));
+
+                if (dataPoint[5] != 0.0) {
+                    alertMsg = "Temperature warning:        " + "<b>"+(dataPoint[5])+"</b>" +"   On      :"+(dataPoint[4]) / 1000;
+
+                    alertInfo.push(alertMsg)
+                    alertMsg.toString()
+
+
+                        var p2 = alertMsg;
+                        document.getElementById("demo").insertAdjacentHTML('beforebegin', p2 +"<br>");
+
+
+
+console.log(alertMsg);
+
+
+                }
             };
         }
     }
@@ -113,4 +133,4 @@ var virtualFireAlarmTemp = function(){
     }
 };
 
-virtualFireAlarmTemp();
+anomalyDetection();
