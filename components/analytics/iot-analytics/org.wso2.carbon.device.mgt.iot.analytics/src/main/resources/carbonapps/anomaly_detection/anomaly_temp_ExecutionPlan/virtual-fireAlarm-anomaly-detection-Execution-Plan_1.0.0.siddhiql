@@ -1,0 +1,22 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('Fire.Alarm.Anomaly.Detection')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+
+
+@Import('iot.per.device.stream.virtualfirealarm.temperature:1.0.0')
+define stream GetTemp (meta_owner string, meta_deviceType string, meta_deviceId string, meta_time long, temperature float);
+
+@Export('iot.per.device.stream.anomaly.detection.FireAlarm:1.0.0')
+define stream anomTemp (meta_owner string, meta_deviceID string, meta_deviceType string, meta_time long, anomTemp float);
+
+define stream anomBool (anomBool bool, anomTime long);
+
+
+from GetTemp  [ temperature > 50 or temperature < 15 ]
+select meta_owner, meta_deviceId as meta_deviceID,meta_deviceType, meta_time as meta_time, temperature as anomTemp
+insert into anomTemp;
